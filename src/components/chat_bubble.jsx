@@ -1,16 +1,35 @@
-const ChatBubble = ({ text, time, role }) => (
-    <div className={`flex items-end ${role === "user" ? "justify-end" : "justify-start"}`}>
-      {role === "bot" && (
-        <div className="w-8 h-8 rounded-full bg-[#d62828] text-white flex items-center justify-center mr-2 text-xs">🤖</div>
+
+// src/components/ChatMessageBubble.jsx
+import React from "react";
+
+function ChatMessageBubble({ msg, formatTime }) {
+  return (
+    <div
+      className={`fade-in flex items-end ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+    >
+      {msg.role === "bot" && (
+        <div className="w-9 h-9 rounded-full bg-blue-500 text-white flex items-center justify-center mr-2 text-sm animate-pop">
+          🤖
+        </div>
       )}
-      <div className={`px-4 py-2 rounded-xl max-w-sm shadow text-sm whitespace-pre-wrap ${role === "user" ? "bg-[#003049] text-white" : "bg-gray-300 text-black dark:bg-gray-700 dark:text-white"}`}>
-        {text}
-        <div className="text-xs text-gray-500 mt-1 text-right">{time}</div>
+      <div
+        className={`px-4 py-2 rounded-2xl max-w-sm text-sm shadow-md whitespace-pre-wrap ${
+          msg.role === "user" ? "bg-[#1A73E8] text-white" : "bg-[#202239] text-gray-100"
+        }`}
+      >
+        {msg.message}
+        <div className="text-[11px] text-gray-400 mt-1 text-right">
+          {formatTime(msg.time)}
+        </div>
       </div>
-      {role === "user" && (
-        <div className="w-8 h-8 rounded-full bg-[#003049] text-white flex items-center justify-center ml-2 text-xs">🧑</div>
+      {msg.role === "user" && (
+        <div className="w-9 h-9 rounded-full bg-[#1A73E8] text-white flex items-center justify-center ml-2 text-sm animate-pop">
+          🧑
+        </div>
       )}
     </div>
   );
-  export default ChatBubble;
-  
+}
+
+export default ChatMessageBubble;
+
