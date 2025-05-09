@@ -193,24 +193,24 @@ function App() {
           setSessionId(data.session_id);
         });
     }
-  }, []);
+  }, [sessionId]);
 
   // Fetch history when session is ready
-useEffect(() => {
-  if (sessionId) return;
+  useEffect(() => {
+    if (!sessionId) return;
 
-  const existing = localStorage.getItem("session_id");
-  if (existing) {
-    setSessionId(existing);
-  } else {
-    fetch("https://rag-chatbot-backend-j4hg.onrender.com/session")
+    fetch(`https://rag-chatbot-backend-j4hg.onrender.com/history/${sessionId}`)
       .then((res) => res.json())
       .then((data) => {
-        localStorage.setItem("session_id", data.session_id);
-        setSessionId(data.session_id);
+        const formatted = data.map((msg) => ({
+          role: msg.sender,
+          message: msg.message,
+          time: new Date(msg.time),
+        }));
+
+        setChatHistory(formatted);
       });
-  }
-}, [sessionId]);
+  }, [sessionId]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -243,16 +243,15 @@ useEffect(() => {
     }
   };
 
-const resetChat = async () => {
-  if (!sessionId) return;
-  await fetch(`https://rag-chatbot-backend-j4hg.onrender.com/reset/${sessionId}`, {
-    method: "POST",
-  });
-  localStorage.removeItem("session_id");
-  setChatHistory([]);
-  setSessionId(""); // This triggers the session creation effect
-};
-
+  const resetChat = async () => {
+    if (!sessionId) return;
+    await fetch(`https://rag-chatbot-backend-j4hg.onrender.com/reset/${sessionId}`, {
+      method: "POST",
+    });
+    localStorage.removeItem("session_id");
+    setChatHistory([]);
+    setSessionId("");
+  };
 
   const formatTime = (date) =>
     new Date(date).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
