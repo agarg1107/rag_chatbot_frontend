@@ -146,7 +146,7 @@ function App() {
     if (existing) {
       setSessionId(existing);
     } else {
-      fetch("http://localhost:8000/session")
+      fetch("https://rag-chatbot-backend-j4hg.onrender.com/session")
         .then(res => res.json())
         .then(data => {
           localStorage.setItem("session_id", data.session_id);
@@ -159,7 +159,7 @@ function App() {
 useEffect(() => {
   if (!sessionId) return;
 
-  fetch(`http://localhost:8000/history/${sessionId}`)
+  fetch(`https://rag-chatbot-backend-j4hg.onrender.com/history/${sessionId}`)
     .then(res => res.json())
     .then(data => {
       const formatted = data.map(msg => ({
@@ -186,7 +186,7 @@ useEffect(() => {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:8000/chat", {
+      const response = await fetch("https://rag-chatbot-backend-j4hg.onrender.com/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: newUserMsg.message, session_id: sessionId }),
@@ -206,7 +206,7 @@ useEffect(() => {
 
   const resetChat = async () => {
     if (!sessionId) return;
-    await fetch(`http://localhost:8000/reset/${sessionId}`, { method: "POST" });
+    await fetch(`https://rag-chatbot-backend-j4hg.onrender.com/reset/${sessionId}`, { method: "POST" });
     localStorage.removeItem("session_id");
     setChatHistory([]);
     setSessionId(""); // force re-fetch new session
