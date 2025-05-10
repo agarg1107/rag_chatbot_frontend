@@ -2,9 +2,9 @@
 // src/components/ChatInput.jsx
 import React from "react";
 
-function ChatInput({ userInput, setUserInput, handleSend, loading }) {
+function ChatInput({ userInput, setUserInput, handleSend, loading,darkMode }) {
   return (
-    <div className="p-4 bg-[#111322] flex items-center space-x-2 border-t border-gray-800">
+    <div className={`${darkMode ? "bg-[#111322]" : "bg-[#ffffff]"} p-4  flex items-center space-x-2 border-t border-gray-800`}>
       <input
         type="text"
         value={userInput}
