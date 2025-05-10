@@ -1,6 +1,3 @@
-
-// src/components/ChatList.jsx
-import React from "react";
 import ChatMessageBubble from "./chat_bubble";
 
 function ChatList({ chatHistory, loading, formatTime, messagesEndRef,darkMode }) {

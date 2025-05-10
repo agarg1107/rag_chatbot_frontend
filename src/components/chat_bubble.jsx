@@ -1,7 +1,3 @@
-
-// src/components/ChatMessageBubble.jsx
-import React from "react";
-
 function ChatMessageBubble({ msg, formatTime }) {
   return (
     <div

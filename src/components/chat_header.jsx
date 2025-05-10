@@ -1,5 +1,3 @@
-// src/components/ChatHeader.jsx
-import React from "react";
 import { RotateCcw, Moon, Sun } from "lucide-react";
 
 function ChatHeader({ darkMode, toggleDarkMode, resetChat }) {
